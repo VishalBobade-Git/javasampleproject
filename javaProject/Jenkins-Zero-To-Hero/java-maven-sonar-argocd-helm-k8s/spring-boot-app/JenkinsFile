@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         GIT_REPO_URL = 'https://github.com/VishalBobade-Git/javasampleproject.git'  // Replace with your repo URL
-        GIT_BRANCH = 'master'  // The branch you want to clone
+        GIT_BRANCH = 'Master'  // The branch you want to clone
     }
 
     stages {
