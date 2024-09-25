@@ -4,6 +4,7 @@ pipeline {
     environment {
         GIT_REPO_URL = 'https://github.com/VishalBobade-Git/javasampleproject.git'  // Replace with your repo URL
         GIT_BRANCH = 'Master'  // The branch you want to clone
+        WORKSPACE_DIR = '/var/jenkins_home/workspace/CI-Part/javaProject/Jenkins-Zero-To-Hero/java-maven-sonar-argocd-helm-k8s/spring-boot-app'  // Define the working directory
     }
 
     stages {
@@ -16,10 +17,12 @@ pipeline {
 
         stage('Build with Maven') {
             steps {
-                // Step to build the project using Maven
-                script {
-                    // Run Maven on Linux
-                    sh 'mvn clean package'
+                // Change to the specified directory before building
+                dir("${WORKSPACE_DIR}") {
+                    script {
+                        // Run Maven on Linux
+                        sh 'mvn clean package'
+                    }
                 }
             }
         }
