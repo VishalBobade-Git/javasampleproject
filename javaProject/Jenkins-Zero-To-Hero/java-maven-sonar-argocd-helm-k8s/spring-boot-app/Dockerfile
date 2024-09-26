@@ -1,13 +1,14 @@
-# You can change this base image to anything else
-# But make sure to use the correct version of Java
+# Base image for Java
 FROM adoptopenjdk/openjdk11:alpine-jre
 
-# Simply the artifact path
-ARG artifact=/var/lib/jenkins/workspace/Ci_Part/javaProject/Jenkins-Zero-To-Hero/java-maven-sonar-argocd-helm-k8s/spring-boot-app/target/spring-boot-web.jar
+# Set artifact path relative to the build context
+ARG artifact=target/spring-boot-web.jar
 
+# Set the working directory
 WORKDIR /opt/app
 
+# Copy the JAR file from the target directory in the build context
 COPY ${artifact} app.jar
 
-# This should not be changed
-ENTRYPOINT ["java","-jar","app.jar"]
+# Command to run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
