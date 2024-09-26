@@ -4,7 +4,7 @@ pipeline {
     environment {
         GIT_REPO_URL = 'https://github.com/VishalBobade-Git/javasampleproject.git'  // Replace with your repo URL
         GIT_BRANCH = 'Master'  // The branch you want to clone
-        WORKSPACE_DIR = '/var/jenkins_home/workspace/CI-Part/javaProject/Jenkins-Zero-To-Hero/java-maven-sonar-argocd-helm-k8s/spring-boot-app'  // Define the working directory
+        WORKSPACE_DIR = '/var/lib/jenkins/workspace/Ci_Part/javaProject/Jenkins-Zero-To-Hero/java-maven-sonar-argocd-helm-k8s/spring-boot-app'  // Define the working directory
         DOCKER_IMAGE_NAME = 'spring-boot-app'  // Local Docker image name
     }
 
