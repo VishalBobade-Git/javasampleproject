@@ -6,6 +6,8 @@ pipeline {
         GIT_BRANCH = 'Master'  // The branch you want to clone
         WORKSPACE_DIR = '/var/lib/jenkins/workspace/Ci_Part/javaProject/Jenkins-Zero-To-Hero/java-maven-sonar-argocd-helm-k8s/spring-boot-app'  // Define the working directory
         DOCKER_IMAGE_NAME = 'spring-boot-app'  // Local Docker image name
+        DOCKER_HUB_REPO = 'https://hub.docker.com/repository/docker/vish86/simple-java-web-app/spring-boot-app'  // Replace with your Docker Hub repo
+        DOCKER_CREDENTIALS_ID = 'vish86'  // Jenkins credentials ID for Docker Hub
     }
 
     stages {
@@ -38,11 +40,26 @@ pipeline {
                 }
             }
         }
+
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                // Push Docker image to Docker Hub
+                script {
+                    withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTIALS_ID}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        sh """
+                        echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+                        docker tag ${DOCKER_IMAGE_NAME}:latest ${DOCKER_HUB_REPO}:latest
+                        docker push ${DOCKER_HUB_REPO}:latest
+                        """
+                    }
+                }
+            }
+        }
     }
 
     post {
         success {
-            echo 'Build and Docker image creation completed successfully!'
+            echo 'Build, Docker image creation, and push to Docker Hub completed successfully!'
         }
         failure {
             echo 'Build failed!'
