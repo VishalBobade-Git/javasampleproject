@@ -3,7 +3,7 @@
 FROM adoptopenjdk/openjdk11:alpine-jre
 
 # Simply the artifact path
-ARG artifact=/var/lib/jenkins/workspace/Ci_Part/javaProject/Jenkins-Zero-To-Hero/java-maven-sonar-argocd-helm-k8s/spring-boot-app/target
+ARG artifact=/var/lib/jenkins/workspace/Ci_Part/javaProject/Jenkins-Zero-To-Hero/java-maven-sonar-argocd-helm-k8s/spring-boot-app/target/spring-boot-web.jar
 
 WORKDIR /opt/app
 
