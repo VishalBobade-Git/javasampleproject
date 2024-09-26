@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-        GIT_REPO_URL = 'https://github.com/VishalBobade-Git/javasampleproject.git'  // Replace with your repo URL
+        GIT_REPO_URL = 'https://github.com/VishalBobade-Git/javasampleproject.git'  // GitHub repository URL
         GIT_BRANCH = 'Master'  // The branch you want to clone
-        WORKSPACE_DIR = '/var/lib/jenkins/workspace/Ci_Part/javaProject/Jenkins-Zero-To-Hero/java-maven-sonar-argocd-helm-k8s/spring-boot-app'  // Define the working directory
+        WORKSPACE_DIR = '/var/lib/jenkins/workspace/Ci_Part/javaProject/Jenkins-Zero-To-Hero/java-maven-sonar-argocd-helm-k8s/spring-boot-app'  // Working directory
         DOCKER_IMAGE_NAME = 'spring-boot-app'  // Local Docker image name
-        DOCKER_HUB_REPO = 'https://hub.docker.com/repository/docker/vish86/spring_boot_app/'  // Replace with your Docker Hub repo
+        DOCKER_HUB_REPO = 'vish86/spring_boot_app'  // Docker Hub repository name (username/repo)
         DOCKER_CREDENTIALS_ID = 'vish86'  // Jenkins credentials ID for Docker Hub
     }
 
@@ -48,8 +48,8 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: "${DOCKER_CREDENTIALS_ID}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                         sh """
                         echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
-                        docker tag ${DOCKER_IMAGE_NAME}:latest ${DOCKER_HUB_REPO}:latest
-                        docker push ${DOCKER_HUB_REPO}:latest
+                        docker tag ${DOCKER_IMAGE_NAME}:latest docker.io/${DOCKER_HUB_REPO}:latest
+                        docker push docker.io/${DOCKER_HUB_REPO}:latest
                         """
                     }
                 }
