@@ -6,7 +6,7 @@ pipeline {
         GIT_BRANCH = 'Master'  // The branch you want to clone
         WORKSPACE_DIR = '/var/lib/jenkins/workspace/Ci_Part/javaProject/Jenkins-Zero-To-Hero/java-maven-sonar-argocd-helm-k8s/spring-boot-app'  // Define the working directory
         DOCKER_IMAGE_NAME = 'spring-boot-app'  // Local Docker image name
-        DOCKER_HUB_REPO = 'https://hub.docker.com/repository/docker/vish86/simple-java-web-app/spring-boot-app'  // Replace with your Docker Hub repo
+        DOCKER_HUB_REPO = 'https://hub.docker.com/repository/docker/vish86/spring_boot_app/'  // Replace with your Docker Hub repo
         DOCKER_CREDENTIALS_ID = 'vish86'  // Jenkins credentials ID for Docker Hub
     }
 
