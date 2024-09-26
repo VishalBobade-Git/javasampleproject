@@ -5,6 +5,7 @@ pipeline {
         GIT_REPO_URL = 'https://github.com/VishalBobade-Git/javasampleproject.git'  // Replace with your repo URL
         GIT_BRANCH = 'Master'  // The branch you want to clone
         WORKSPACE_DIR = '/var/jenkins_home/workspace/CI-Part/javaProject/Jenkins-Zero-To-Hero/java-maven-sonar-argocd-helm-k8s/spring-boot-app'  // Define the working directory
+        DOCKER_IMAGE_NAME = 'spring-boot-app'  // Local Docker image name
     }
 
     stages {
@@ -26,11 +27,22 @@ pipeline {
                 }
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                // Build the Docker image using the Dockerfile in the working directory
+                dir("${WORKSPACE_DIR}") {
+                    script {
+                        sh 'docker build -t ${DOCKER_IMAGE_NAME}:latest .'
+                    }
+                }
+            }
+        }
     }
 
     post {
         success {
-            echo 'Build completed successfully!'
+            echo 'Build and Docker image creation completed successfully!'
         }
         failure {
             echo 'Build failed!'
