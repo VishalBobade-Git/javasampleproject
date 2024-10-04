@@ -1,0 +1,38 @@
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-app
+  labels:
+    app: spring-boot-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: spring-boot-app
+  template:
+    metadata:
+      labels:
+        app: spring-boot-app
+    spec:
+      containers:
+      - name: spring-boot-app
+        image: vish86/spring_boot_app:latest  # Docker image from Docker Hub
+        ports:
+        - containerPort: 8080                # Expose the container port
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-boot-app-service
+spec:
+  type: NodePort  # Use NodePort service
+  selector:
+    app: spring-boot-app
+  ports:
+    - protocol: TCP
+      port: 8080               # Port exposed by the service
+      targetPort: 8080          # Port inside the container
+      nodePort: 30008           # NodePort (pick a port between 30000-32767)
